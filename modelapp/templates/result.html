@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CataScan - Result</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+<body>
+    <div class="container">
+        <div class="nav-header">
+            <a href="{% url 'upload' %}" class="back-btn">←</a>
+            <h1>CataScan</h1>
+            <a href="{% url 'profile' %}" style="color: #4a90a4; text-decoration: none;">👤</a>
+        </div>
+
+        <div class="logo">
+            <div class="eye-icon"></div>
+        </div>
+
+        <h2 style="margin-bottom: 30px; color: #2c3e50;">Analysis Result</h2>
+
+        <div class="result-card">
+            <img src="{{ scan.image.url }}" alt="Analyzed Image" class="result-image" />
+
+            <div class="diagnosis {{ scan.diagnosis }}">
+                Diagnosis: {{ scan.diagnosis|title }}
+            </div>
+
+            <div class="confidence">
+                Confidence: {{ confidence_percentage }}%
+            </div>
+
+            <div
+                style="
+                    margin-top: 20px;
+                    padding: 15px;
+                    background: #f8f9fa;
+                    border-radius: 8px;
+                    text-align: left;
+                    color: #34495e;
+                    font-weight: 500;
+                "
+            >
+                <strong>Analysis Details:</strong>
+                <br /><br />
+                <strong>Date:</strong> {{ scan.created_at|date:"M d, Y" }} at {{ scan.created_at|time:"h:i A" }}<br />
+                <strong>Diagnosis:</strong> {{ scan.diagnosis|title }}<br />
+                <strong>Confidence Level:</strong> {{ confidence_percentage }}%
+
+                <br /><br />
+                🧾 <strong>Note:</strong> This is an AI-generated result. Please consult a healthcare professional for diagnosis and treatment.
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <a
+                href="{% url 'upload' %}"
+                class="btn-primary"
+                style="flex: 1; text-decoration: none; display: block; text-align: center;"
+                >NEW SCAN</a
+            >
+            <a
+                href="{% url 'history' %}"
+                class="btn-primary"
+                style="
+                    flex: 1;
+                    text-decoration: none;
+                    display: block;
+                    text-align: center;
+                    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+                "
+                >VIEW HISTORY</a
+            >
+        </div>
+
+        <div style="margin-top: 20px; font-size: 12px; color: #95a5a6; text-align: center;">
+            <p>
+                <strong>Disclaimer:</strong> This AI analysis is for informational purposes only and
+                should not replace professional medical advice. Always consult with a qualified
+                healthcare provider for proper diagnosis and treatment.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

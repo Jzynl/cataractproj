@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CataScan - Upload</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="nav-header">
+            <button class="back-btn" onclick="history.back()">←</button>
+            <h1>CataScan</h1>
+            <a href="{% url 'profile' %}" style="color: #4a90a4; text-decoration: none;">👤</a>
+        </div>
+        
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <div class="logo">
+            <div class="eye-icon"></div>
+        </div>
+        
+        <h2 style="margin-bottom: 20px; color: #2c3e50;">Upload Eye Image</h2>
+        <p class="subtitle">Take or upload a clear photo of the eye for cataract detection</p>
+        
+        <form method="post" enctype="multipart/form-data" id="uploadForm">
+            {% csrf_token %}
+            <div class="upload-area" onclick="document.getElementById('imageInput').click()">
+                <div class="upload-icon">📷</div>
+                <p><strong>Tap to take photo or upload image</strong></p>
+                <p style="font-size: 14px; color: #7f8c8d; margin-top: 10px;">
+                    Supported formats: JPG, PNG, JPEG
+                </p>
+            </div>
+            
+            <input type="file" id="imageInput" name="image" accept="image/*" style="display: none;" onchange="previewImage(this)" required>
+            
+            <div id="imagePreview" style="display: none; margin: 20px 0;">
+                <img id="preview" src="" alt="Preview" style="max-width: 100%; height: auto; border-radius: 8px;">
+                <button type="button" onclick="removeImage()" style="display: block; margin: 10px auto; background: none; border: none; color: #e74c3c; cursor: pointer;">Remove Image</button>
+            </div>
+            
+            <button type="submit" class="btn-primary" id="analyzeBtn" style="display: none;">
+                ANALYZE IMAGE
+            </button>
+        </form>
+        
+        <div style="margin-top: 30px;">
+            <a href="{% url 'history' %}" class="menu-item">
+                <span>📄 View History</span>
+                <span class="menu-arrow">→</span>
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        function previewImage(input) {
+            const preview = document.getElementById('preview');
+            const previewDiv = document.getElementById('imagePreview');
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    previewDiv.style.display = 'block';
+                    analyzeBtn.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        function removeImage() {
+            document.getElementById('imageInput').value = '';
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('analyzeBtn').style.display = 'none';
+        }
+        
+        document.getElementById('uploadForm').addEventListener('submit', function() {
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            analyzeBtn.textContent = 'ANALYZING...';
+            analyzeBtn.disabled = true;
+        });
+    </script>
+</body>
+</html>

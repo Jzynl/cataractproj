@@ -1,0 +1,4 @@
+0 Normal eye
+1 immature cataract
+2 Mature cataract
+3 Error no classification 
