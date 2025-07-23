@@ -29,3 +29,10 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
+
+
+# Dummy model to enable a custom stats view in Django admin
+class DashboardStats(models.Model):
+    class Meta:
+        verbose_name_plural = "Diagnosis Stats"
+        managed = False  # Prevents Django from creating a DB table
