@@ -1,5 +1,75 @@
+
+## Installation & Usage
+
+### Prerequisites
+
+Ensure you have the following installed:
+
+* Python 3.8+
+* Git
+* Virtual environment tool (optional but recommended)
+
+---
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/your-username/your-repository-name.git
+cd your-repository-name
+```
+
+---
+
+### Create and Activate Virtual Environment (Optional)
+
+```bash
+python -m venv venv
+source venv/bin/activate   # On Windows: venv\Scripts\activate
+```
+
+---
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### Run Database Migrations
+
+```bash
+python manage.py migrate
+```
+
+---
+
+### Start the Django Server
+
+```bash
+python manage.py runserver
+```
+
+---
+
+ Use the Application
+
+1. Open a web browser and go to:
+   `http://127.0.0.1:8000/`
+2. Upload an eye image through the web interface
+3. The system processes the image and displays the predicted cataract stage
+
+
+
+## Model Note
+
+The trained deep learning model is loaded by the Django application for inference.
+Model training and experimentation were performed using Google Colab.
+
+###
 Automatic Cataract Detection System
-Final Year Project – Bachelor of Engineering (Computer Engineering)**
+Final Year Project – Bachelor of Engineering (Computer Engineering)
 
 Overview
 This project implements an automatic cataract detection system using deep learning.
